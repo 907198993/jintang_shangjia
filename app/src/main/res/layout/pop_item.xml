@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/title_tools_bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/tv_start_work"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:drawableLeft="@mipmap/ig_work"
+            android:layout_centerInParent="true"
+            android:text="@string/work" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/tv_rest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_centerInParent="true"
+            android:drawableLeft="@mipmap/reset_image"
+            android:text="@string/reset" />
+    </RelativeLayout>
+
+</LinearLayout>

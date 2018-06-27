@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_f6"
+    >
+
+    <FrameLayout
+        android:id="@+id/layout_main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/line1"
+
+        ></FrameLayout>
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_above="@+id/rg_main"
+        android:visibility="invisible"
+        android:background="@color/gray_d7"/>
+
+    <RadioGroup
+        android:id="@+id/rg_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:visibility="invisible"
+        android:orientation="horizontal"
+        >
+        <com.github.customview.MyRadioButton
+            android:id="@+id/rb_home"
+            style="@style/radio_home"
+            android:checked="true"
+            android:text="主页"
+            app:my_radio_checked="@mipmap/home_checked"
+            app:my_radio_checked_color="@color/home_red"
+            app:my_radio_checked_drawable="top"
+            app:my_radio_normal="@mipmap/home_normal"
+            app:my_radio_normal_color="@color/gray_99"
+            />
+
+        <com.github.customview.MyRadioButton
+            android:id="@+id/rb_message"
+            style="@style/radio_home"
+            android:text="消息"
+            app:my_radio_checked="@mipmap/message_checked"
+            app:my_radio_checked_color="@color/home_red"
+            app:my_radio_checked_drawable="top"
+            app:my_radio_normal="@mipmap/message_normal"
+            app:my_radio_normal_color="@color/gray_99"
+            />
+
+
+        <com.github.customview.MyRadioButton
+            android:id="@+id/rb_message1"
+            style="@style/radio_home"
+            android:text="消息"
+            app:my_radio_checked="@mipmap/message1_checked"
+            app:my_radio_checked_color="@color/home_red"
+            app:my_radio_checked_drawable="top"
+            app:my_radio_normal="@mipmap/message1_normal"
+            app:my_radio_normal_color="@color/gray_99"
+            />
+    </RadioGroup>
+</RelativeLayout>

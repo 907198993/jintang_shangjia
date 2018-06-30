@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:gravity="center"
+            android:src="@mipmap/add_guige_image"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"/>
+
+        <Button
+            android:id="@+id/bt_del"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/bt_dynamic_del"
+            android:layout_alignParentRight="true"/>
+
+</RelativeLayout>

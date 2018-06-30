@@ -19,7 +19,7 @@
     <color name="green1">#34e8a6</color>
     <color name="green2">#22ddb0</color>
     <color name="transparent_bg">#80000000</color>
-
+    <color name="photopicker_background">#181819</color>
     <color name="home_green">#18CB6D</color>
     <color name="blue">#4ed3fd</color>
     <color name="red">#EF312A</color>

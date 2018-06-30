@@ -2,10 +2,12 @@ package com.qifan.shangjia.base;
 
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -161,6 +163,8 @@ public abstract class BaseFragment extends IBaseFragment implements View.OnClick
         super.onViewCreated(view, savedInstanceState);
         Intent startIntent = new Intent(getActivity(), LocationServices.class);
         getActivity().startService(startIntent);
+
+
         if(null!=view.findViewById(R.id.pcfl_refresh)){
             pcfl = (PtrClassicFrameLayout) view.findViewById(R.id.pcfl_refresh);
             pcfl.setLastUpdateTimeRelateObject(this);
@@ -571,4 +575,5 @@ public abstract class BaseFragment extends IBaseFragment implements View.OnClick
             return false;
         }
     }
+
 }

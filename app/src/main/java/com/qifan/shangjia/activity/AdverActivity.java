@@ -92,7 +92,7 @@ public class AdverActivity extends BaseActivity {
                             if(userName==null){
                                 startActivity(new Intent(AdverActivity.this,LoginActivity.class));
                             }else{
-                            startActivity(new Intent(AdverActivity.this,LoginActivity.class));
+                            startActivity(new Intent(AdverActivity.this,MainActivity.class));
                             }
                             finish();
                         }

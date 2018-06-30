@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_f2">
+<include layout="@layout/app_title"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+            <com.github.customview.MyTextView
+                android:id="@+id/btn_add_main_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="批量上传"
+                android:textColor="@color/white"
+                android:layout_margin="10dp"
+                app:my_tv_solid="@color/red"
+                app:my_tv_press="@color/red"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                app:my_tv_corner_radius="4dp"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"
+                />
+            <com.qifan.shangjia.view.MyGridView
+                android:id="@+id/gridView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:horizontalSpacing="10dp"
+                android:numColumns="3"
+                android:verticalSpacing="10dp" />
+            <!-- 装重复动态布局的容器-->
+            <LinearLayout
+                android:id="@+id/parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+            <com.github.customview.MyTextView
+                android:id="@+id/btn_add_guige"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加"
+                android:textColor="@color/white"
+                android:layout_margin="10dp"
+                app:my_tv_solid="@color/red"
+                app:my_tv_press="@color/red"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                app:my_tv_corner_radius="4dp"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/week" />
+
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@mipmap/sale_status" />
+
+
+            <RadioGroup
+                android:id="@+id/radiogroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="15dp"
+                android:background="@drawable/radio_background"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_button_sale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="5dp"
+                    android:text="出售中"
+                    android:textColor="@drawable/color_radio" />
+
+                <RadioButton
+                    android:id="@+id/radio_button_delisting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="5dp"
+                    android:text="已下架"
+                    android:textColor="@drawable/color_radio" />
+            </RadioGroup>
+            <RadioGroup
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="15dp"
+                android:background="@drawable/radio_background"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_button_suggest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="5dp"
+                    android:text="推荐"
+                    android:textColor="@drawable/color_radio" />
+
+                <RadioButton
+                    android:id="@+id/radio_button_unsuggest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="5dp"
+                    android:text="不推荐"
+                    android:textColor="@drawable/color_radio" />
+                <RadioButton
+                    android:id="@+id/radio_button_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="5dp"
+                    android:text="正常"
+                    android:textColor="@drawable/color_radio" />
+            </RadioGroup>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@mipmap/main_suggest" />
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="15dp"
+                android:background="@drawable/radio_background"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_button_main_suggest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="5dp"
+                    android:text="推荐"
+                    android:textColor="@drawable/color_radio" />
+
+                <RadioButton
+                    android:id="@+id/radio_button_main_unsuggest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="5dp"
+                    android:text="不推荐"
+                    android:textColor="@drawable/color_radio" />
+            </RadioGroup>
+            <!--首页推荐顺序-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@mipmap/main_suggest_orderby" />
+
+            <com.github.customview.MyLinearLayout
+                android:layout_width="200dp"
+                android:layout_margin="15dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                app:my_ll_corner_radius="4dp"
+                app:my_ll_solid="@color/white"
+                >
+                <com.github.customview.MyEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="15sp"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:imeOptions="actionNext"
+                    />
+            </com.github.customview.MyLinearLayout>
+            <!--商品名称-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@mipmap/goods_name" />
+
+            <com.github.customview.MyLinearLayout
+                android:layout_width="200dp"
+                android:layout_margin="15dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                app:my_ll_corner_radius="4dp"
+                app:my_ll_solid="@color/white"
+                >
+                <com.github.customview.MyEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="15sp"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:imeOptions="actionNext"
+                    />
+            </com.github.customview.MyLinearLayout>
+            <!--封面图片-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@mipmap/home_picture" />
+
+            <com.github.customview.MyImageView
+                android:layout_width="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/home_picture_add"/>
+            <!--主图图片-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@mipmap/main_picture" />
+
+            <com.github.customview.MyImageView
+                android:layout_width="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/home_picture_add"/>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@mipmap/goods_attributes" />
+
+            <com.github.customview.MyLinearLayout
+                android:layout_width="200dp"
+                android:layout_margin="15dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                app:my_ll_corner_radius="4dp"
+                app:my_ll_solid="@color/white"
+                >
+                <com.github.customview.MyEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="15sp"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:hint="标题"
+                    android:imeOptions="actionNext"
+                    />
+            </com.github.customview.MyLinearLayout>
+            <com.github.customview.MyLinearLayout
+                android:layout_width="200dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                app:my_ll_corner_radius="4dp"
+                app:my_ll_solid="@color/white"
+                >
+                <com.github.customview.MyEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="15sp"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:hint="内容"
+                    android:imeOptions="actionNext"
+                    />
+            </com.github.customview.MyLinearLayout>
+            <!--原价-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@mipmap/goods_price" />
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal">
+            <com.github.customview.MyLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                app:my_ll_corner_radius="4dp"
+                app:my_ll_solid="@color/white"
+                >
+                <com.github.customview.MyEditText
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:textSize="15sp"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:imeOptions="actionNext"
+                    />
+            </com.github.customview.MyLinearLayout>
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="元"
+                   android:layout_gravity="center_vertical"
+                   android:textSize="15sp"/>
+           </LinearLayout>
+            <!--折扣比例-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@mipmap/sale_percent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.github.customview.MyLinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_margin="15dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    app:my_ll_corner_radius="4dp"
+                    app:my_ll_solid="@color/white"
+                    >
+                    <com.github.customview.MyEditText
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:textSize="15sp"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:imeOptions="actionNext"
+                        />
+                </com.github.customview.MyLinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="%"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="例： 商品价格100，折扣比例10%，销售价=90"
+                    android:layout_gravity="bottom"
+                    android:paddingBottom="15dp"
+                    android:textSize="8sp"/>
+            </LinearLayout>
+
+            <!--包邮-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@mipmap/free_express" />
+
+
+            <RadioGroup
+                android:id="@+id/radiogroup_free"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="15dp"
+                android:background="@drawable/radio_background"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_button_free"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="5dp"
+                    android:text="包邮"
+                    android:textColor="@drawable/color_radio" />
+
+                <RadioButton
+                    android:id="@+id/radio_button_no_free"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="5dp"
+                    android:text="不包邮"
+                    android:textColor="@drawable/color_radio" />
+            </RadioGroup>
+
+            <!--排序数字-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@mipmap/orderby_number" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.github.customview.MyLinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_margin="15dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    app:my_ll_corner_radius="4dp"
+                    app:my_ll_solid="@color/white"
+                    >
+                    <com.github.customview.MyEditText
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:textSize="15sp"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:imeOptions="actionNext"
+                        />
+                </com.github.customview.MyLinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="数字，越小越向前"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+
+            <com.github.customview.MyTextView
+                android:id="@+id/tv_register_commit"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:my_tv_corner_radius="4dp"
+                app:my_tv_press="@color/red_press"
+                app:my_tv_solid="@color/red" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

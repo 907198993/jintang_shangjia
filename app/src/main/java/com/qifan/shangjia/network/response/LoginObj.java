@@ -6,23 +6,45 @@ package com.qifan.shangjia.network.response;
 
 public class LoginObj {
 
-    private  String  username;
-    private  String  userid;
+//     "real_name": "超级管理员",
+//             "user_name": "admin",
+//             "storeName": "XX运动鞋店",
+//             "balance": 2000
 
-    public String getUsername() {
-        return username;
+    private  String  real_name;
+    private  String  user_name;
+    private  String  storeName;
+    private  String  balance;
+
+    public String getReal_name() {
+        return real_name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setReal_name(String real_name) {
+        this.real_name = real_name;
     }
 
-
-    public String getUserid() {
-        return userid;
+    public String getUser_name() {
+        return user_name;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
     }
 }

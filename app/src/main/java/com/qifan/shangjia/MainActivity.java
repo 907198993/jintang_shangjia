@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -96,6 +98,7 @@ public class MainActivity extends BaseActivity {
     }
     @Override
     protected void initView() {
+
 //        // 推送
 //        String registrationID = JPushInterface.getRegistrationID(mContext);
 //        android.util.Log.i("registrationID","registrationID====="+registrationID);

@@ -1,9 +1,16 @@
 package com.qifan.shangjia.fragment;
 
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -11,7 +18,9 @@ import com.bumptech.glide.Glide;
 import com.github.androidtools.SPUtils;
 import com.qifan.shangjia.Config;
 import com.qifan.shangjia.R;
+import com.qifan.shangjia.activity.AddGoodsActivity;
 import com.qifan.shangjia.base.BaseFragment;
+import com.qifan.shangjia.tools.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +41,8 @@ public class MyFragment extends BaseFragment {
 
     @BindView(R.id.gridview_order)
     GridView gridview_order;
-
+    @BindView(R.id.ll_title)
+    RelativeLayout ll_title;
 
     private List<Map<String, Object>> dataList1,dataList2;
     private SimpleAdapter adapter1,adapter2;
@@ -105,9 +115,18 @@ public class MyFragment extends BaseFragment {
         int isShowPoint = SPUtils.getPrefInt(mContext, Config.news_is_check, 0);
 
     }
-
+    private void floatStatusBar() {
+        StatusBarUtil.fullScreen(getActivity());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            RelativeLayout.LayoutParams titleParams = (RelativeLayout.LayoutParams) ll_title.getLayoutParams();
+            // 标题栏在上方留出一段距离，看起来仍在状态栏下方
+            titleParams.topMargin = StatusBarUtil.getStatusBarHeight(getActivity());
+            ll_title.setLayoutParams(titleParams);
+        }
+    }
     @Override
     protected void initView() {
+        floatStatusBar();
         String[] from={"img","text"};
         int[] to={R.id.img,R.id.text};
         dataList1 = new ArrayList<Map<String, Object>>();
@@ -119,7 +138,16 @@ public class MyFragment extends BaseFragment {
         }
         adapter1=new SimpleAdapter(getActivity(), dataList1, R.layout.gridview_item, from, to);
         gridView.setAdapter(adapter1);
+        //添加消息处理
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                if(position==0){
+                   STActivity(AddGoodsActivity.class);
+                }
+            }
+        });
         dataList2 = new ArrayList<Map<String, Object>>();
         for (int i = 0; i <icno2.length; i++) {
             Map<String, Object> map=new HashMap<String, Object>();
@@ -141,6 +169,7 @@ public class MyFragment extends BaseFragment {
     protected void onViewClick(View v) {
 
     }
+
 
 //    @OnClick({R.id.tv_my_address,R.id.ll_my_account,R.id.ll_my_yangshengdou,R.id.ll_my_info,R.id.ll_my_vouchers,R.id.iv_my_seting, R.id.iv_my_msg, R.id.tv_my_qiandao, R.id.tv_my_order, R.id.tv_my_shequ, R.id.tv_my_evaluate, R.id.tv_my_fenxiao, R.id.tv_my_tuihuo, R.id.tv_my_collect, R.id.tv_my_zixun})
 //    public void onViewClick(View view) {

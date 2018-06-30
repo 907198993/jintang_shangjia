@@ -1,12 +1,15 @@
 package com.qifan.shangjia.activity;
 
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.github.customview.MyEditText;
 import com.qifan.shangjia.GetSign;
 import com.qifan.shangjia.R;
 import com.qifan.shangjia.base.BaseActivity;
+import com.qifan.shangjia.tools.StatusBarUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +38,7 @@ public class ForgetPasswordActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        StatusBarUtil.setStatusBarColor(ForgetPasswordActivity.this,getResources().getColor(R.color.red));
     }
 
     @Override

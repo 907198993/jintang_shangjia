@@ -30,7 +30,7 @@ public interface IRequest {
     Call<ResponseObj<RegisterObj>> userRegister(@QueryMap Map<String,String> map);
 
     //登陆
-    @POST("api/Login/LoginUser")
+    @POST("api/App/GetUserLogin")
     Call<ResponseObj<LoginObj>> userLogin(@QueryMap Map<String,String> map);
 
     //修改密码

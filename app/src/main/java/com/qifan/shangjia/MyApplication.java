@@ -24,10 +24,10 @@ public class MyApplication extends MultiDexApplication {
         if(true&&BuildConfig.DEBUG){                           //http://192.168.0.19:20001/        //http://121.40.186.118:5108
          //   NetWorkManager.getInstance(getApplicationContext(),"http://121.40.186.118:5108",BuildConfig.DEBUG).complete();
 
-             NetWorkManager.getInstance(getApplicationContext(),"http://47.104.102.17:8003",BuildConfig.DEBUG).complete();
+             NetWorkManager.getInstance(getApplicationContext(),"http://47.104.102.17:8001",BuildConfig.DEBUG).complete();
         }else{
           //  NetWorkManager.getInstance(getApplicationContext(),"http://121.40.186.118:5008",BuildConfig.DEBUG).complete();
-            NetWorkManager.getInstance(getApplicationContext(),"http://47.104.102.17:8003",BuildConfig.DEBUG).complete();
+            NetWorkManager.getInstance(getApplicationContext(),"http://47.104.102.17:8001",BuildConfig.DEBUG).complete();
         }
        // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
         SDKInitializer.initialize(this);

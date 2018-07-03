@@ -147,6 +147,7 @@ public class LoginActivity extends BaseActivity {
         ApiRequest.userLogin(map, new MyCallBack<LoginObj>(mContext) {
             @Override
             public void onSuccess(LoginObj obj) {
+                SPUtils.setPrefString(mContext, Config.user_id,obj.getId());
                 SPUtils.setPrefString(mContext, Config.user_name,getSStr(etLoginPhone));
                 STActivity(MainActivity.class);
                 finish();

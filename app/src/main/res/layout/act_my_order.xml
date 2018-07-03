@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background_f2"
+    >
+<include layout="@layout/app_title"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tl_my_order"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        app:tabIndicatorColor="@color/red"
+        app:tabSelectedTextColor="@color/red">
+
+    </android.support.design.widget.TabLayout>
+
+    <com.qifan.shangjia.view.MyViewPager
+        android:id="@+id/vp_my_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.qifan.shangjia.view.MyViewPager>
+</LinearLayout>

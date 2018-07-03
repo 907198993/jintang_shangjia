@@ -4,6 +4,7 @@ import com.qifan.shangjia.base.ResponseObj;
 import com.qifan.shangjia.network.response.BillObj;
 import com.qifan.shangjia.network.response.GradObj;
 import com.qifan.shangjia.network.response.LoginObj;
+import com.qifan.shangjia.network.response.OrderDetailObj;
 import com.qifan.shangjia.network.response.OrderListObj;
 import com.qifan.shangjia.network.response.RegisterObj;
 import com.qifan.shangjia.network.response.UploadImageObj;
@@ -37,8 +38,16 @@ public interface IRequest {
     @GET("api/Login/RetrievePwd")
     Call<ResponseObj<Integer>> userRetrievePwd(@QueryMap Map<String,String> map);
 
+    //获取商品列表
+    @POST("api/App/GetGoodsList")
+    Call<ResponseObj<List<OrderDetailObj>>> getGoodsList(@QueryMap Map<String,String> map);
+
+    //获取商品信息
+    @POST("api/App/GetOrderListGoods")
+    Call<ResponseObj<List<OrderDetailObj>>> orderDetail(@QueryMap Map<String,String> map);
+
     //获取订单列表
-    @POST("api/Order/GetOrder")
+    @POST("api/App/GetOrderList")
     Call<ResponseObj<List<OrderListObj>>> orderList(@QueryMap Map<String,String> map);
 
     //抢单

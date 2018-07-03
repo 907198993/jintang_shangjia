@@ -95,6 +95,9 @@
         <activity android:name="com.qifan.shangjia.activity.WithdrawalsActivity"/>
         <activity android:name="com.qifan.shangjia.activity.CommitIdCardActivity"/>
         <activity android:name="com.qifan.shangjia.activity.AddGoodsActivity"/>
+        <activity android:name="com.qifan.shangjia.activity.MyOrderActivity"/>
+        <activity android:name="com.qifan.shangjia.activity.OrderDetailActivity"/>
+        <activity android:name="com.qifan.shangjia.activity.GoodsListActivity"/>
 
         <activity
             android:name="com.foamtrace.photopicker.PhotoPickerActivity"

@@ -101,8 +101,6 @@ public class AddGoodsActivity extends BaseActivity {
         getViewInstance(addView);
 
 
-
-
         datas = new ArrayList<>();
         gridViewAddImgesAdpter = new GridViewAddImgesAdpter(datas, this);
         gridView.setAdapter(gridViewAddImgesAdpter);
@@ -116,7 +114,6 @@ public class AddGoodsActivity extends BaseActivity {
 //                intent1.setMaxTotal(5); // 最多选择照片数量，默认为9
 //                intent1.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态
 //                startActivityForResult(intent1, REQUEST_CAMERA_CODE);
-
 
                     Intent intent = new Intent(
                             Intent.ACTION_PICK,
@@ -209,8 +206,6 @@ public class AddGoodsActivity extends BaseActivity {
                 break;
         }
     }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -230,8 +225,6 @@ public class AddGoodsActivity extends BaseActivity {
                     cursor.moveToFirst();
                     //最后根据索引值获取图片路径
                     String path = cursor.getString(column_index);
-
-
                     uploadImage(path);
                 }
 
@@ -433,14 +426,6 @@ public class AddGoodsActivity extends BaseActivity {
                 viewHolder1.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 bt_del.setVisibility(View.GONE);
             }
-
-//            Glide.with(AddGoodsActivity.this)
-//                    .load(new File(getItem(position)))
-//                    .placeholder(R.mipmap.default_error)
-//                    .error(R.mipmap.default_error)
-//                    .centerCrop()
-//                    .crossFade()
-//                    .into(imageView);
             return convertView;
         }
     }

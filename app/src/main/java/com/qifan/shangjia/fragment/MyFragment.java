@@ -19,6 +19,7 @@ import com.github.androidtools.SPUtils;
 import com.qifan.shangjia.Config;
 import com.qifan.shangjia.R;
 import com.qifan.shangjia.activity.AddGoodsActivity;
+import com.qifan.shangjia.activity.MyOrderActivity;
 import com.qifan.shangjia.base.BaseFragment;
 import com.qifan.shangjia.tools.StatusBarUtil;
 
@@ -157,7 +158,15 @@ public class MyFragment extends BaseFragment {
         }
         adapter2=new SimpleAdapter(getActivity(), dataList2, R.layout.gridview_item, from, to);
         gridview_order.setAdapter(adapter2);
+        gridview_order.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                if(position==0){
+                    STActivity(MyOrderActivity.class);
+                }
+            }
+        });
     }
 
     @Override

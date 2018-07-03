@@ -47,6 +47,26 @@ public class ApiRequest extends BaseApiRequest {
         getGeneralClient(IRequest.class).orderList(map).enqueue(callBack);
     }
 
+    public static void orderDetail(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).orderDetail(map).enqueue(callBack);
+    }
+
+
+    public static void getGoodsList(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getGoodsList(map).enqueue(callBack);
+    }
+
+
+
+
     public static void GrabOrderStep1(Map map, MyCallBack callBack) {
         if (notNetWork(callBack.getContext())) {
             callBack.onFailure(null, new NoNetworkException(Config.noNetWork));

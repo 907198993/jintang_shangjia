@@ -91,4 +91,6 @@ dependencies {
     compile 'com.foamtrace:photopicker:1.0'
     compile 'jp.wasabeef:glide-transformations:2.0.0'
     compile(name: 'NativeImgCompress', ext: 'aar')
+    //实现向ios系统上类似于微信上删除对话框的功能
+    compile 'com.daimajia.swipelayout:library:1.2.0@aar'
 }

@@ -51,6 +51,8 @@ public class Constant {
         public static final String msgId="msgId";
         public static final String title="title";
         public static final String code="code";
+        public static final String editCategory="editCategory";
+        public static final String Category="Category";
         public static final String accountId="accountId";
         public static final String account="account";
         public static final String questionContent="questionContent";

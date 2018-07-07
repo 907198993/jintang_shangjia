@@ -16,10 +16,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.androidtools.SPUtils;
+import com.github.customview.MyTextView;
 import com.qifan.shangjia.Config;
 import com.qifan.shangjia.R;
 import com.qifan.shangjia.activity.AddGoodsActivity;
+import com.qifan.shangjia.activity.ForgetPasswordActivity;
+import com.qifan.shangjia.activity.GoodsCategoryActivity;
+import com.qifan.shangjia.activity.GoodsListActivity;
 import com.qifan.shangjia.activity.MyOrderActivity;
+import com.qifan.shangjia.activity.WithdrawalsActivity;
 import com.qifan.shangjia.base.BaseFragment;
 import com.qifan.shangjia.tools.StatusBarUtil;
 
@@ -42,8 +47,18 @@ public class MyFragment extends BaseFragment {
 
     @BindView(R.id.gridview_order)
     GridView gridview_order;
+
     @BindView(R.id.ll_title)
     RelativeLayout ll_title;
+
+    @BindView(R.id.my_wallet)
+    TextView my_wallet; // 余额
+
+    @BindView(R.id.tv_cash)
+    MyTextView tv_cash;   //取现按钮
+
+
+
 
     private List<Map<String, Object>> dataList1,dataList2;
     private SimpleAdapter adapter1,adapter2;
@@ -106,16 +121,16 @@ public class MyFragment extends BaseFragment {
 //        });
     }
 
-    private void getInfo() {
-        String nick_name = SPUtils.getPrefString(mContext, Config.nick_name, null);
-        String sex = SPUtils.getPrefString(mContext, Config.sex, null);
-        String avatar = SPUtils.getPrefString(mContext, Config.avatar, null);
-        String amount = SPUtils.getPrefString(mContext, Config.amount, null);
-        int keeping_bean = SPUtils.getPrefInt(mContext, Config.keeping_bean, 0);
-        int count_wsy = SPUtils.getPrefInt(mContext, Config.count_wsy, 0);
-        int isShowPoint = SPUtils.getPrefInt(mContext, Config.news_is_check, 0);
-
-    }
+//    private void getInfo() {
+//        String nick_name = SPUtils.getPrefString(mContext, Config.nick_name, null);
+//        String sex = SPUtils.getPrefString(mContext, Config.sex, null);
+//        String avatar = SPUtils.getPrefString(mContext, Config.avatar, null);
+//
+//        int keeping_bean = SPUtils.getPrefInt(mContext, Config.keeping_bean, 0);
+//        int count_wsy = SPUtils.getPrefInt(mContext, Config.count_wsy, 0);
+//        int isShowPoint = SPUtils.getPrefInt(mContext, Config.news_is_check, 0);
+//
+//    }
     private void floatStatusBar() {
         StatusBarUtil.fullScreen(getActivity());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -127,6 +142,8 @@ public class MyFragment extends BaseFragment {
     }
     @Override
     protected void initView() {
+        String amount = SPUtils.getPrefString(mContext, Config.amount, null);
+        my_wallet.setText(amount);  //余额
         floatStatusBar();
         String[] from={"img","text"};
         int[] to={R.id.img,R.id.text};
@@ -145,7 +162,11 @@ public class MyFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if(position==0){
-                   STActivity(AddGoodsActivity.class);
+                     STActivity(AddGoodsActivity.class);
+                }else if(position==1){
+                    STActivity(GoodsListActivity.class);
+                }else{
+                    STActivity(GoodsCategoryActivity.class);
                 }
             }
         });
@@ -174,62 +195,13 @@ public class MyFragment extends BaseFragment {
 
     }
 
-    @Override
-    protected void onViewClick(View v) {
+    @OnClick({R.id.tv_cash})
+    protected void onViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_cash:
+                STActivity(WithdrawalsActivity.class);
+                break;
 
+        }
     }
-
-
-//    @OnClick({R.id.tv_my_address,R.id.ll_my_account,R.id.ll_my_yangshengdou,R.id.ll_my_info,R.id.ll_my_vouchers,R.id.iv_my_seting, R.id.iv_my_msg, R.id.tv_my_qiandao, R.id.tv_my_order, R.id.tv_my_shequ, R.id.tv_my_evaluate, R.id.tv_my_fenxiao, R.id.tv_my_tuihuo, R.id.tv_my_collect, R.id.tv_my_zixun})
-//    public void onViewClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.ll_my_account:
-//                STActivity(MyBalanceActivity.class);
-//                break;
-//            case R.id.ll_my_yangshengdou:
-//                STActivity(YangShengDouActivity.class);
-//                break;
-//            case R.id.ll_my_info:
-//                STActivity(MyDataActivity.class);
-//                break;
-//            case R.id.ll_my_vouchers:
-//                STActivity(MyVouchersActivity.class);
-//                break;
-//            case R.id.iv_my_seting:
-//                STActivity(SetingActivity.class);
-//                break;
-//            case R.id.iv_my_msg:
-//                STActivity(MyMessageActivity.class);
-//                break;
-//            case R.id.tv_my_qiandao:
-//                STActivity(QianDaoActivity.class);
-//                break;
-//            case R.id.tv_my_order:
-//                STActivity(MyOrderListActivity.class);
-//                break;
-//            case R.id.tv_my_address:
-//                STActivity(AddressListActivity.class);
-//                break;
-//            case R.id.tv_my_shequ:
-//                STActivity(MySheQuActivity.class);
-//                break;
-//            case R.id.tv_my_evaluate:
-//                STActivity(MyEvaluateActivity.class);
-//                break;
-//            case R.id.tv_my_fenxiao:
-//                STActivity(MyFenXiaoActivity.class);
-//                break;
-//            case R.id.tv_my_tuihuo:
-//                STActivity(TuiHuoListActivity.class);
-//                break;
-//            case R.id.tv_my_collect:
-//                STActivity(MyAllCollectActivity.class);
-//                break;
-//            case R.id.tv_my_zixun:
-//                goHX();
-//                break;
-//        }
-//    }
-
-
 }

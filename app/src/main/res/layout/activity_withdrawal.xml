@@ -18,82 +18,65 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:orientation="vertical">
-
-            <com.github.customview.MyLinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp"
-                android:gravity="center_vertical"
+                android:background="@color/white"
+                android:gravity="center_vertical|right"
                 android:orientation="horizontal"
-                android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                app:my_ll_corner_topLeftRadius="4dp"
-                app:my_ll_corner_topRightRadius="4dp"
-                app:my_ll_solid="@color/white">
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center_vertical"
-                    android:src="@mipmap/user_name"
-                    android:text="提现帐号" />
-
-                <com.github.customview.MyEditText
-                    android:id="@+id/et_username"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:enabled="false"
-                    android:imeOptions="actionNext"
-                    android:inputType="number"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
                     android:maxLines="1"
-                    android:textSize="15sp" />
-            </com.github.customview.MyLinearLayout>
+                    android:text="可取金额："
+                    />
 
-            <com.github.customview.MyLinearLayout
+                <TextView
+                    android:id="@+id/tv_wallet_price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TD123456"
+                    />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="2px"
-                android:gravity="center_vertical"
+                android:background="@color/white"
+                android:gravity="center_vertical|right"
                 android:orientation="horizontal"
-                android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                app:my_ll_corner_bottomLeftRadius="4dp"
-                app:my_ll_corner_bottomRightRadius="4dp"
-                app:my_ll_solid="@color/white">
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center_vertical"
-                    android:src="@mipmap/user_name"
-                    android:text="支付宝号" />
-
-                <com.github.customview.MyEditText
-                    android:id="@+id/et_zhifubao"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="请输入支付宝账号"
-                    android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
                     android:maxLines="1"
-                    android:textSize="15sp" />
-            </com.github.customview.MyLinearLayout>
+                    android:text="待到账金额："
+                    />
 
+                <TextView
+                    android:id="@+id/tv_in_transit_price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TD123456"
+                    />
+            </LinearLayout>
             <com.github.customview.MyLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="2px"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 app:my_ll_corner_bottomLeftRadius="4dp"
                 app:my_ll_corner_bottomRightRadius="4dp"
@@ -138,8 +121,8 @@
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 app:my_tv_corner_radius="4dp"
-                app:my_tv_press="@color/button_press"
-                app:my_tv_solid="@color/main_background" />
+                app:my_tv_solid="@color/red"
+                app:my_tv_press="@color/red"/>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

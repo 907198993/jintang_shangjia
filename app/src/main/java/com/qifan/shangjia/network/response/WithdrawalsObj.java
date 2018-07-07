@@ -14,41 +14,22 @@ public class WithdrawalsObj {
          * realName : 张三
          */
 
-        private int result;
-        private String account;
-        private String usable;
-        private String realName;
+        private String balance;
+        private String auditBalance;
 
-        public int getResult() {
-            return result;
-        }
+    public String getBalance() {
+        return balance;
+    }
 
-        public void setResult(int result) {
-            this.result = result;
-        }
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
 
-        public String getAccount() {
-            return account;
-        }
+    public String getAuditBalance() {
+        return auditBalance;
+    }
 
-        public void setAccount(String account) {
-            this.account = account;
-        }
-
-        public String getUsable() {
-            return usable;
-        }
-
-        public void setUsable(String usable) {
-            this.usable = usable;
-        }
-
-        public String getRealName() {
-            return realName;
-        }
-
-        public void setRealName(String realName) {
-            this.realName = realName;
-        }
-
+    public void setAuditBalance(String auditBalance) {
+        this.auditBalance = auditBalance;
+    }
 }

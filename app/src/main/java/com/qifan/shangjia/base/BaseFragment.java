@@ -25,7 +25,7 @@ import com.github.baseclass.rx.RxBus;
 import com.qifan.shangjia.Config;
 import com.qifan.shangjia.GetSign;
 import com.qifan.shangjia.R;
-import com.qifan.shangjia.service.LocationServices;
+//import com.qifan.shangjia.service.LocationServices;
 import com.qifan.shangjia.view.ProgressLayout;
 //import com.sk.yangyu.Config;
 //import com.sk.yangyu.GetSign;
@@ -161,8 +161,8 @@ public abstract class BaseFragment extends IBaseFragment implements View.OnClick
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Intent startIntent = new Intent(getActivity(), LocationServices.class);
-        getActivity().startService(startIntent);
+//        Intent startIntent = new Intent(getActivity(), LocationServices.class);
+//        getActivity().startService(startIntent);
 
 
         if(null!=view.findViewById(R.id.pcfl_refresh)){

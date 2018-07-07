@@ -94,10 +94,13 @@
         <activity android:name="com.qifan.shangjia.activity.BillActivity"/>
         <activity android:name="com.qifan.shangjia.activity.WithdrawalsActivity"/>
         <activity android:name="com.qifan.shangjia.activity.CommitIdCardActivity"/>
-        <activity android:name="com.qifan.shangjia.activity.AddGoodsActivity"/>
+        <activity android:name="com.qifan.shangjia.activity.AddGoodsActivity" android:windowSoftInputMode="adjustPan"/>
         <activity android:name="com.qifan.shangjia.activity.MyOrderActivity"/>
         <activity android:name="com.qifan.shangjia.activity.OrderDetailActivity"/>
         <activity android:name="com.qifan.shangjia.activity.GoodsListActivity"/>
+        <activity android:name="com.qifan.shangjia.activity.WithdrawalDetailActivity"/>
+        <activity android:name="com.qifan.shangjia.activity.GoodsCategoryActivity"/>
+        <activity android:name="com.qifan.shangjia.activity.AddGoodsCategoryActivity"/>
 
         <activity
             android:name="com.foamtrace.photopicker.PhotoPickerActivity"
@@ -105,7 +108,6 @@
             android:configChanges="orientation|screenSize"/>
         <activity android:name="com.foamtrace.photopicker.PhotoPreviewActivity"
             android:theme="@style/PhotoPickerTheme"/>
-
     </application>
 
 </manifest>

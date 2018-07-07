@@ -30,16 +30,26 @@ import butterknife.OnClick;
 public class WithdrawalsActivity extends BaseActivity {
 
 
-    @BindView(R.id.et_username)
-    MyEditText etUsername;
-    @BindView(R.id.et_zhifubao)
-    MyEditText etZhifubao;
+
     @BindView(R.id.et_money)
     MyEditText etMoney;
+
     @BindView(R.id.tv_commit)
     MyTextView tvCommit;
+
+    @BindView(R.id.app_right_tv)
+    TextView app_right_tv;
+
+    @BindView(R.id.tv_wallet_price)
+    TextView tv_wallet_price;
+
+    @BindView(R.id.tv_in_transit_price)
+    TextView tv_in_transit_price;
+
+
     @BindView(R.id.tv_enable_withdrawal)
     TextView tv_enable_withdrawal;
+
    private  double enable_money; //可取金额
     private static final int DEFAULT_DECIMAL_NUMBER = 2;
     /**
@@ -49,12 +59,13 @@ public class WithdrawalsActivity extends BaseActivity {
 
     @Override
     protected int getContentView() {
-        setAppTitle("提现");
+        setAppTitle("钱包提现");
         return R.layout.activity_withdrawal;
     }
 
     @Override
     protected void initView() {
+        app_right_tv.setText("明细");
         InputFilter[] filters = {new MaxTextLengthFilter(mContext,10,true,"请重新输入")};
         etMoney.setFilters(filters);
 
@@ -64,22 +75,24 @@ public class WithdrawalsActivity extends BaseActivity {
     protected void initData() {
         showProgress();
         Map<String, String> map = new HashMap<String, String>();
-        map.put("userid", SPUtils.getPrefString(mContext, Config.user_id, null));
+        map.put("userId", SPUtils.getPrefString(mContext, Config.user_id, null));
         map.put("sign", GetSign.getSign(map));
         ApiRequest.Gettixian(map, new MyCallBack<WithdrawalsObj>(mContext, pcfl, pl_load) {
             @Override
             public void onSuccess(WithdrawalsObj walletObj) {
-                etUsername.setText(walletObj.getRealName());
-                etZhifubao.setText(walletObj.getAccount());
-                tv_enable_withdrawal.setText("本次可提现"+walletObj.getUsable()+"元");
-                enable_money =  Double.valueOf(walletObj.getUsable());
+                tv_wallet_price.setText(walletObj.getBalance());
+                tv_in_transit_price.setText(walletObj.getAuditBalance());
+                enable_money =  Double.valueOf(walletObj.getBalance());
             }
         });
     }
 
-    @OnClick({R.id.tv_commit})
+    @OnClick({R.id.tv_commit,R.id.app_right_tv})
     protected void onViewClick(View v) {
         switch (v.getId()) {
+            case R.id.app_right_tv:
+                STActivity(WithdrawalDetailActivity.class);
+                break;
             case R.id.tv_commit:
                 double edit_money = Double.valueOf(etMoney.getText().toString());
                 if(edit_money>enable_money){
@@ -89,20 +102,16 @@ public class WithdrawalsActivity extends BaseActivity {
                 }else{
                     showProgress();
                     Map<String, String> map = new HashMap<String, String>();
-                    map.put("userid", SPUtils.getPrefString(mContext, Config.user_id, null));
-                    map.put("money",etMoney.getText().toString());
-                    map.put("account",etZhifubao.getText().toString());
+                    map.put("userId", SPUtils.getPrefString(mContext, Config.user_id, null));
+                    map.put("withdrawal",etMoney.getText().toString());
                     map.put("sign", GetSign.getSign(map));
-                    ApiRequest.Withdrawals(map, new MyCallBack<GradObj>(mContext, pcfl, pl_load) {
+                    ApiRequest.startWithdrawals(map, new MyCallBack<Object>(mContext, pcfl, pl_load) {
                         @Override
-                        public void onSuccess(GradObj walletObj) {
-                           if(walletObj.getResult() ==1){
+                        public void onSuccess(Object obj) {
                                showMsg("申请提现成功");
                                finish();
-                           }
                         }
                     });
-
                 }
                 break;
         }

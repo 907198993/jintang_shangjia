@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_f2"
+    >
+    <include layout="@layout/app_title"/>
+    <com.qifan.shangjia.view.ProgressLayout
+        android:id="@id/pl_load"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:layout_above="@+id/tv_address_add"
+                android:id="@+id/rv_address_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+            <com.github.customview.MyTextView
+                android:id="@+id/tv_address_add"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:text="添加商品类型"
+                android:textColor="@color/white"
+                app:my_tv_solid="@color/red"
+                app:my_tv_press="@color/red_press"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                app:my_tv_corner_radius="4dp"
+                android:textSize="15sp"
+                />
+        </RelativeLayout>
+
+    </com.qifan.shangjia.view.ProgressLayout>
+</LinearLayout>

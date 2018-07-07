@@ -29,6 +29,15 @@ public class OrderDetailObj {
         private int sales_volume;
         private double original_price;
         private double price;
+       private String goods_image;
+
+    public String getGoods_image() {
+        return goods_image;
+    }
+
+    public void setGoods_image(String goods_image) {
+        this.goods_image = goods_image;
+    }
 
     public int getSales_volume() {
         return sales_volume;

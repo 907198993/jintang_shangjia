@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/background_f2">
 <include layout="@layout/app_title"/>
 
@@ -24,17 +25,44 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <android.support.v7.widget.AppCompatSpinner
-                    android:layout_width="match_parent"
+                <Spinner
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:entries="@array/week" />
-
+                    android:spinnerMode="dropdown"
+                    android:id="@+id/sp1"
+                    />
+                <Spinner
+                    android:id="@+id/sp2"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"/>
             </LinearLayout>
-
-            <Spinner
-                android:id="@+id/spinner"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="20dp"
+                android:background="@mipmap/shop_category" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:id="@+id/sp3"
+                    />
+
+                <Spinner
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"/>
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -43,7 +71,7 @@
 
 
             <RadioGroup
-                android:id="@+id/radiogroup"
+                android:id="@+id/radiogroup_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -136,6 +164,7 @@
                 android:layout_height="20dp"
                 android:background="@mipmap/main_suggest" />
             <RadioGroup
+                android:id="@+id/radio_button_main_recommend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -188,10 +217,11 @@
                 app:my_ll_solid="@color/white"
                 >
                 <com.github.customview.MyEditText
+                    android:id="@+id/et__homeRecommend_num"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textSize="15sp"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:maxLines="1"
                     android:imeOptions="actionNext"
                     />
@@ -212,6 +242,7 @@
                 app:my_ll_solid="@color/white"
                 >
                 <com.github.customview.MyEditText
+                    android:id="@+id/goods_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textSize="15sp"
@@ -227,9 +258,10 @@
                 android:background="@mipmap/home_picture" />
 
             <com.github.customview.MyImageView
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_home_pic"
+                android:layout_width="150dp"
                 android:layout_margin="15dp"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:src="@mipmap/home_picture_add"/>
             <!--主图图片-->
             <View
@@ -252,11 +284,14 @@
                 android:layout_height="20dp"
                 android:background="@mipmap/picture_detail" />
 
-            <com.github.customview.MyImageView
-                android:layout_width="wrap_content"
+            <com.qifan.shangjia.view.MyGridView
+                android:id="@+id/gridview_detail_pic"
                 android:layout_margin="15dp"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/home_picture_add"/>
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:horizontalSpacing="10dp"
+                android:numColumns="3"
+                android:verticalSpacing="10dp" />
 
             <!--产品规格-->
             <View
@@ -305,6 +340,7 @@
                 app:my_ll_solid="@color/white"
                 >
                 <com.github.customview.MyEditText
+                    android:id="@+id/et_property_title"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textSize="15sp"
@@ -325,6 +361,7 @@
                 app:my_ll_solid="@color/white"
                 >
                 <com.github.customview.MyEditText
+                    android:id="@+id/et_property_content"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textSize="15sp"
@@ -353,6 +390,7 @@
                 app:my_ll_solid="@color/white"
                 >
                 <com.github.customview.MyEditText
+                    android:id="@+id/goods_price"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:textSize="15sp"
@@ -387,6 +425,7 @@
                     app:my_ll_solid="@color/white"
                     >
                     <com.github.customview.MyEditText
+                        android:id="@+id/et_sale_percent"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:textSize="15sp"
@@ -423,6 +462,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="15dp"
+                android:visibility="gone"
                 android:background="@drawable/radio_background"
                 android:orientation="horizontal">
 
@@ -475,10 +515,11 @@
                     app:my_ll_solid="@color/white"
                     >
                     <com.github.customview.MyEditText
+                        android:id="@+id/et_orderby_number"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:textSize="15sp"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:maxLines="1"
                         android:imeOptions="actionNext"
                         />
@@ -492,7 +533,7 @@
             </LinearLayout>
 
             <com.github.customview.MyTextView
-                android:id="@+id/tv_register_commit"
+                android:id="@+id/tv_add_goods_commit"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_alignParentBottom="true"

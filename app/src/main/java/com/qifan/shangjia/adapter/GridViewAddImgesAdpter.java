@@ -38,7 +38,6 @@ public class GridViewAddImgesAdpter extends BaseAdapter {
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
-
     /**
      * 获取最大上传张数
      *

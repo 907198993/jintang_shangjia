@@ -4,19 +4,14 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.androidtools.PhoneUtils;
-import com.github.androidtools.inter.MyOnClickListener;
-import com.github.baseclass.adapter.BaseRecyclerAdapter;
 import com.github.baseclass.adapter.LoadMoreAdapter;
 import com.github.baseclass.adapter.LoadMoreViewHolder;
-import com.github.baseclass.adapter.RecyclerViewHolder;
 import com.github.customview.MyTextView;
 import com.qifan.shangjia.Constant;
 import com.qifan.shangjia.GetSign;
@@ -24,8 +19,8 @@ import com.qifan.shangjia.R;
 import com.qifan.shangjia.base.BaseActivity;
 import com.qifan.shangjia.base.MyCallBack;
 import com.qifan.shangjia.network.ApiRequest;
+import com.qifan.shangjia.network.response.MoneyDetailObj;
 import com.qifan.shangjia.network.response.OrderDetailObj;
-
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,33 +31,40 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
 
-public class GoodsListActivity extends BaseActivity implements LoadMoreAdapter.OnLoadMoreListener{
+public class WithdrawalDetailActivity extends BaseActivity implements LoadMoreAdapter.OnLoadMoreListener{
     @BindView(R.id.rv_order_detail)
     RecyclerView rv_order_detail;
 
     LoadMoreAdapter adapter;
     @Override
     protected int getContentView() {
-        setAppTitle("商品列表");
+        setAppTitle("提现明细");
         return R.layout.act_order_detail;
     }
 
     @Override
     protected void initView() {
-        adapter=new LoadMoreAdapter<OrderDetailObj>(mContext,R.layout.item_goods_list,pageSize) {
+        adapter=new LoadMoreAdapter<MoneyDetailObj>(mContext,R.layout.item_money_list,pageSize) {
             @Override
-            public void bindData(LoadMoreViewHolder viewHolder, int position, OrderDetailObj item) {
+            public void bindData(LoadMoreViewHolder viewHolder, int position, MoneyDetailObj item) {
 
-                ImageView imageView = viewHolder.getImageView(R.id.iv_order_goods);
-                MyTextView  textView = (MyTextView) viewHolder.getView(R.id.tv_goods_editor);
-                textView.setVisibility(View.VISIBLE);
-                TextView  tv_order_goods_origin_price = (TextView) viewHolder.getView(R.id.tv_order_goods_origin_price);
-                tv_order_goods_origin_price.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
-                Glide.with(mContext).load(Constant.url+item.getGoods_image()).error(R.color.c_press).into(imageView);
-                viewHolder.setText(R.id.tv_order_goods_name, item.getGoods_name())
-                        .setText(R.id.tv_order_goods_origin_price, "¥" + item.getOriginal_price())
-                        .setText(R.id.tv_order_goods_price, "¥" + item.getPrice())
-                        .setText(R.id.tv_order_goods_num, "销量：" + item.getSales_volume());
+
+
+                TextView tv_money_type = viewHolder.getTextView(R.id.tv_money_type);
+                viewHolder.setText(R.id.tv_order_no, item.getOrder_no())
+                        .setText(R.id.tv_zhifubao,  item.getAccount())
+                        .setText(R.id.tv_money, item.getWithdrawal())
+                        .setText(R.id.tv_time, item.getCreateDate());
+                if(item.getStatus()==0){
+                    tv_money_type.setText("处理中");
+                    tv_money_type.setTextColor(getResources().getColor(R.color.blue));
+                }else if(item.getStatus()==1){
+                    tv_money_type.setText("成功");
+                    tv_money_type.setTextColor(getResources().getColor(R.color.green));
+                }else{
+                    tv_money_type.setText("失败");
+                    tv_money_type.setTextColor(getResources().getColor(R.color.red));
+                }
 
             }
         };
@@ -91,9 +93,9 @@ public class GoodsListActivity extends BaseActivity implements LoadMoreAdapter.O
         map.put("pageIndex",page+"");
         map.put("pageSize",pageSize+"");
         map.put("sign", GetSign.getSign(map));
-        ApiRequest.getGoodsList(map, new MyCallBack<List<OrderDetailObj>>(mContext,pcfl,pl_load) {
+        ApiRequest.getWithdrawalsList(map, new MyCallBack<List<MoneyDetailObj>>(mContext,pcfl,pl_load) {
             @Override
-            public void onSuccess(List<OrderDetailObj> list) {
+            public void onSuccess(List<MoneyDetailObj> list) {
                 if(isLoad){
                     pageNum++;
                     adapter.addList(list,true);

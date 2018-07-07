@@ -149,6 +149,7 @@ public class LoginActivity extends BaseActivity {
             public void onSuccess(LoginObj obj) {
                 SPUtils.setPrefString(mContext, Config.user_id,obj.getId());
                 SPUtils.setPrefString(mContext, Config.user_name,getSStr(etLoginPhone));
+                SPUtils.setPrefString(mContext, Config.amount,obj.getBalance());
                 STActivity(MainActivity.class);
                 finish();
             }

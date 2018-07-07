@@ -53,7 +53,7 @@ public class OrderListObj {
         private String order_no;
         private int coupon_id;
         private int youhui_money;
-        private int freight;
+        private double freight;
         private double combined;
         private int order_status;
         private int return_goods_status;
@@ -134,15 +134,15 @@ public class OrderListObj {
             this.youhui_money = youhui_money;
         }
 
-        public int getFreight() {
-            return freight;
-        }
+    public double getFreight() {
+        return freight;
+    }
 
-        public void setFreight(int freight) {
-            this.freight = freight;
-        }
+    public void setFreight(double freight) {
+        this.freight = freight;
+    }
 
-        public double getCombined() {
+    public double getCombined() {
             return combined;
         }
 

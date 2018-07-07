@@ -23,6 +23,14 @@ public class ApiRequest extends BaseApiRequest {
         getGeneralClient(IRequest.class).userRegister(map).enqueue(callBack);
     }
 
+    public static void getSpinnerData(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getSpinnerData(map).enqueue(callBack);
+    }
+
     public static void userLogin(Map map, MyCallBack callBack) {
         if (notNetWork(callBack.getContext())) {
             callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
@@ -115,13 +123,26 @@ public class ApiRequest extends BaseApiRequest {
         getGeneralClient(IRequest.class).Gettixian(map).enqueue(callBack);
     }
 
-    public static void Withdrawals(Map map, MyCallBack callBack) {
+
+    public static void startWithdrawals(Map map, MyCallBack callBack) {
         if (notNetWork(callBack.getContext())) {
             callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
             return;
         }
-        getGeneralClient(IRequest.class).Withdrawals(map).enqueue(callBack);
+        getGeneralClient(IRequest.class).startWithdrawals(map).enqueue(callBack);
     }
+
+
+    public static void getWithdrawalsList(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getWithdrawalsList(map).enqueue(callBack);
+    }
+
+
+
     public static void uploadImg(Map map, UploadImgItem item, MyCallBack callBack) {
         if (notNetWork(callBack.getContext())) {
             callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
@@ -138,4 +159,35 @@ public class ApiRequest extends BaseApiRequest {
         getGeneralClient(IRequest.class).UploadCard(map).enqueue(callBack);
     }
 
+
+    public static void getGoodsCategory(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getGoodsCategory(map).enqueue(callBack);
+    }
+
+    public static void addGoodsCategory(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).addGoodsCategory(map).enqueue(callBack);
+    }
+
+    public static void deleteGoodsCategory(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).deleteGoodsCategory(map).enqueue(callBack);
+    }
+    public static void updateGoodsCategory(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).updateGoodsCategory(map).enqueue(callBack);
+    }
 }

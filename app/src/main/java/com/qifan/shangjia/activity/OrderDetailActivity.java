@@ -36,6 +36,7 @@ import com.qifan.shangjia.base.BaseActivity;
 import com.qifan.shangjia.base.MyCallBack;
 import com.qifan.shangjia.network.ApiRequest;
 import com.qifan.shangjia.network.response.OrderDetailObj;
+import com.qifan.shangjia.tools.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,6 +73,7 @@ public class OrderDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        StatusBarUtil.setStatusBarColor(OrderDetailActivity.this,getResources().getColor(R.color.red));
         action = getIntent().getAction();
         orderNo = getIntent().getStringExtra(Constant.IParam.orderNo);
         rv_order_detail.setLayoutManager(new LinearLayoutManager(mContext));

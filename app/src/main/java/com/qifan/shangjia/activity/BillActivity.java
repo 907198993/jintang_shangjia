@@ -12,6 +12,7 @@ import com.qifan.shangjia.base.BaseActivity;
 import com.qifan.shangjia.base.MyCallBack;
 import com.qifan.shangjia.network.ApiRequest;
 import com.qifan.shangjia.network.response.BillObj;
+import com.qifan.shangjia.tools.StatusBarUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +37,7 @@ public class BillActivity extends BaseActivity implements LoadMoreAdapter.OnLoad
 
     @Override
     protected void initView() {
+        StatusBarUtil.setStatusBarColor(BillActivity.this,getResources().getColor(R.color.red));
         adapter=new LoadMoreAdapter<BillObj>(mContext,R.layout.item_order_list2,pageSize) {
             @Override
             public void bindData(LoadMoreViewHolder holder, int position, BillObj bean) {

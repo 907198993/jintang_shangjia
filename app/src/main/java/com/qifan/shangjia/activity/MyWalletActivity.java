@@ -11,6 +11,7 @@ import com.qifan.shangjia.base.BaseActivity;
 import com.qifan.shangjia.base.MyCallBack;
 import com.qifan.shangjia.network.ApiRequest;
 import com.qifan.shangjia.network.response.WalletObj;
+import com.qifan.shangjia.tools.StatusBarUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class MyWalletActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        StatusBarUtil.setStatusBarColor(MyWalletActivity.this,getResources().getColor(R.color.red));
     }
 
     @Override

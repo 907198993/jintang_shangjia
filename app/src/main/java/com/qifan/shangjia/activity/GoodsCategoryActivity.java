@@ -19,6 +19,7 @@ import com.qifan.shangjia.base.BaseActivity;
 import com.qifan.shangjia.base.MyCallBack;
 import com.qifan.shangjia.network.ApiRequest;
 import com.qifan.shangjia.network.response.CategoryObj;
+import com.qifan.shangjia.tools.StatusBarUtil;
 
 
 import java.util.HashMap;
@@ -46,7 +47,7 @@ public class GoodsCategoryActivity extends BaseActivity implements LoadMoreAdapt
 
     @Override
     protected void initView() {
-
+        StatusBarUtil.setStatusBarColor(GoodsCategoryActivity.this,getResources().getColor(R.color.red));
         adapter=new LoadMoreAdapter<CategoryObj>(mContext,R.layout.item_category_list,pageSize) {
             @Override
             public void bindData(LoadMoreViewHolder holder, int position, CategoryObj bean) {

@@ -21,6 +21,7 @@ import com.qifan.shangjia.base.MyCallBack;
 import com.qifan.shangjia.network.ApiRequest;
 import com.qifan.shangjia.network.response.MoneyDetailObj;
 import com.qifan.shangjia.network.response.OrderDetailObj;
+import com.qifan.shangjia.tools.StatusBarUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +45,7 @@ public class WithdrawalDetailActivity extends BaseActivity implements LoadMoreAd
 
     @Override
     protected void initView() {
+        StatusBarUtil.setStatusBarColor(WithdrawalDetailActivity.this,getResources().getColor(R.color.red));
         adapter=new LoadMoreAdapter<MoneyDetailObj>(mContext,R.layout.item_money_list,pageSize) {
             @Override
             public void bindData(LoadMoreViewHolder viewHolder, int position, MoneyDetailObj item) {

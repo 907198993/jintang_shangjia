@@ -27,6 +27,7 @@ import com.qifan.shangjia.base.MyCallBack;
 import com.qifan.shangjia.network.ApiRequest;
 import com.qifan.shangjia.network.response.AddGoodsItem;
 import com.qifan.shangjia.network.response.OrderDetailObj;
+import com.qifan.shangjia.tools.StatusBarUtil;
 
 
 import java.util.HashMap;
@@ -51,6 +52,7 @@ public class GoodsListActivity extends BaseActivity implements LoadMoreAdapter.O
 
     @Override
     protected void initView() {
+        StatusBarUtil.setStatusBarColor(GoodsListActivity.this,getResources().getColor(R.color.red));
         adapter=new LoadMoreAdapter<OrderDetailObj>(mContext,R.layout.item_goods_list,pageSize) {
             @Override
             public void bindData(LoadMoreViewHolder viewHolder, int position, OrderDetailObj item) {

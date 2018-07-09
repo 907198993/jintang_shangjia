@@ -18,6 +18,7 @@ import com.qifan.shangjia.event.GetOrderEvent;
 import com.qifan.shangjia.event.GetOrderNumEvent;
 import com.qifan.shangjia.fragment.AllOrderFragment;
 import com.qifan.shangjia.network.ApiRequest;
+import com.qifan.shangjia.tools.StatusBarUtil;
 import com.qifan.shangjia.view.MyViewPager;
 
 import java.util.ArrayList;
@@ -92,6 +93,7 @@ public class MyOrderActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        StatusBarUtil.setStatusBarColor(MyOrderActivity.this,getResources().getColor(R.color.red));
         vp_my_order.setScroll(false);
         type = getIntent().getIntExtra(Constant.type, Constant.type_0);
         adapter = new OrderFragmentAdapter(getSupportFragmentManager());

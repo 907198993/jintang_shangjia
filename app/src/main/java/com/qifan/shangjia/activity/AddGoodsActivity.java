@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -61,6 +62,7 @@ import com.qifan.shangjia.network.response.LoginObj;
 import com.qifan.shangjia.network.response.Specification;
 import com.qifan.shangjia.network.response.UploadImgItem;
 import com.qifan.shangjia.tools.BitmapUtils;
+import com.qifan.shangjia.tools.StatusBarUtil;
 
 import net.bither.util.NativeUtil;
 
@@ -198,7 +200,7 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
     //排序数字
     @BindView(R.id.et_orderby_number)
     MyEditText et_orderby_number;
-    
+
     public  int   SpecificationIndex = 0;
     private  List<Specification> specifications;
     private  List<String> guigeImage = new ArrayList<>();//只存储图片的地址
@@ -215,8 +217,11 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
 
     private boolean isEdit;
     private String goodsId;
+
+
     @Override
     protected void initView() {
+        StatusBarUtil.setStatusBarColor(AddGoodsActivity.this,getResources().getColor(R.color.red));
         setAppTitle("添加商品");
         isEdit = getIntent().getBooleanExtra(Constant.IParam.editGoods,false);
         if(isEdit){
@@ -240,7 +245,7 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
             et__homeRecommend_num.setText(addGoodsItem.getIs_homeRecommend_num()); //首页推荐顺序
             goods_name.setText(addGoodsItem.getGoodsName());//商品名称
             Glide.with(mContext)
-                    .load(addGoodsItem.getGoods_image())
+                    .load(Constant.url+addGoodsItem.getGoods_image())
                     .priority(Priority.HIGH)
                     .into(tv_home_pic);
 
@@ -266,7 +271,7 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
            for(int i =0;i<specification.size();i++){
                addItem(specification.get(i));
                SpecificationIndex= i+1;
-               guigeImage.add(i,specification.get(i).getImages());
+               guigeImage.add(i,specification.get(i).getImages());//编辑进入的
            }
 
             et_property_title.setText(addGoodsItem.getProperty_title());
@@ -632,7 +637,7 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
 
 
         Glide.with(mContext)
-                .load(specification.getImages())
+                .load(Constant.url+specification.getImages())
                 .priority(Priority.HIGH)
                 .into(imageView);
         newView.findViewById(R.id.iv_delete).setOnClickListener(new View.OnClickListener(){
@@ -1064,18 +1069,18 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
             }
             if (datas != null && position < datas.size()) {
 
-                final File file = new File(datas.get(position).get("ImageData").getImgName());
+//                final File file = new File(datas.get(position).get("ImageData").getImgName());
                 Glide.with(context)
-                        .load(datas.get(position).get("ImageData").getImgName())
+                        .load(Constant.url+datas.get(position).get("ImageData").getImgName())
                         .priority(Priority.HIGH)
                         .into(viewHolder.ivimage);
                 viewHolder.btdel.setVisibility(View.VISIBLE);
                 viewHolder.btdel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (file.exists()) {
-                            file.delete();
-                        }
+//                        if (file.exists()) {
+//                            file.delete();
+//                        }
                         datas.remove(position);
                         notifyDataSetChanged();
                     }

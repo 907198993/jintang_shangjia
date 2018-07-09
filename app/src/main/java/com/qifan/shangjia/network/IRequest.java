@@ -124,7 +124,7 @@ public interface IRequest {
 
 
     //图片上传
-    @POST("api/MyLib/PostUploadFileBase64")
+    @POST("api/App/PostUploadFileBase64")
     Call<ResponseObj<BaseObj>> uploadImg(@QueryMap Map<String, String> map, @Body UploadImgItem item);
 
     //实名认证

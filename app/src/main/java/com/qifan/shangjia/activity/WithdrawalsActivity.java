@@ -16,6 +16,7 @@ import com.qifan.shangjia.network.ApiRequest;
 import com.qifan.shangjia.network.response.GradObj;
 import com.qifan.shangjia.network.response.WithdrawalsObj;
 import com.qifan.shangjia.tools.MaxTextLengthFilter;
+import com.qifan.shangjia.tools.StatusBarUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,6 +66,7 @@ public class WithdrawalsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        StatusBarUtil.setStatusBarColor(WithdrawalsActivity.this,getResources().getColor(R.color.red));
         app_right_tv.setText("明细");
         InputFilter[] filters = {new MaxTextLengthFilter(mContext,10,true,"请重新输入")};
         etMoney.setFilters(filters);

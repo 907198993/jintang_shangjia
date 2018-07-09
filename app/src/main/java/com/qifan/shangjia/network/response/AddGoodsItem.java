@@ -1,12 +1,16 @@
 package com.qifan.shangjia.network.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2018/7/9 0009.
  */
 
-public class AddGoodsItem {
+public class AddGoodsItem  implements Serializable{
 
 
     /**
@@ -44,7 +48,6 @@ public class AddGoodsItem {
     private String discount;
     private String orderBy;
     private List<Specification> specification;
-
 
     public String getGoodsTypeParent() {
         return goodsTypeParent;

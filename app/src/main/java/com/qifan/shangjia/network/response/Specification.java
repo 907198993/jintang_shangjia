@@ -1,10 +1,12 @@
 package com.qifan.shangjia.network.response;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2018/7/7 0007.
  */
 //规格
-public class Specification {
+public class Specification  implements Serializable{
 
     private  String specificationName;
     private  String price;

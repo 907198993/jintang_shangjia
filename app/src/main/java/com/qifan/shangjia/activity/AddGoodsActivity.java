@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -52,6 +53,7 @@ import com.qifan.shangjia.base.BaseActivity;
 import com.qifan.shangjia.base.BaseObj;
 import com.qifan.shangjia.base.MyCallBack;
 import com.qifan.shangjia.network.ApiRequest;
+import com.qifan.shangjia.network.response.AddGoods;
 import com.qifan.shangjia.network.response.AddGoodsItem;
 import com.qifan.shangjia.network.response.AddGoodsObj;
 import com.qifan.shangjia.network.response.ImageData;
@@ -110,8 +112,8 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
     private String TAG =AddGoodsActivity.class.getSimpleName();
     private LayoutInflater inflater;
 
-    private List<Map<String, ImageData>> homeImagedatas; //存储主图图片地址
-    private List<Map<String, ImageData>> mainImagedatas; //存储详情图片地址
+    private List<Map<String, ImageData>> homeImagedatas = new ArrayList<>(); //存储主图图片地址
+    private List<Map<String, ImageData>> mainImagedatas= new ArrayList<>(); //存储详情图片地址
     private GridViewAddImgesAdpter gridViewHomeAddImgesAdpter,gridViewMainAddImgesAdpter;
 
     private int flag = 0;
@@ -140,10 +142,25 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
     @BindView(R.id.radiogroup_status)
     RadioGroup radiogroup_status;
     private String goodsStatus="1";
+
+
+    //出售中，已下架
+    @BindView(R.id.radio_button_sale)
+    RadioButton  radio_button_sale;
+    @BindView(R.id.radio_button_delisting)
+    RadioButton radio_button_delisting;
+    //////
+
     //是否店铺首页推荐
     @BindView(R.id.radio_button_main_recommend)
     RadioGroup radio_button_main_recommend;
     private String is_homeRecommend="1";
+
+    //推荐，不推荐
+    @BindView(R.id.radio_button_main_suggest)
+    RadioButton  radio_button_main_suggest;
+    @BindView(R.id.radio_button_main_unsuggest)
+    RadioButton radio_button_main_unsuggest;
 
     //首页推荐顺序
     @BindView(R.id.et__homeRecommend_num)
@@ -194,19 +211,72 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
     }
     ImageView imageView ;
 
-    private AddGoodsItem addGoodsItem = new AddGoodsItem();
+    public AddGoodsItem addGoodsItem = new AddGoodsItem();
 
+    private boolean isEdit;
+    private String goodsId;
     @Override
     protected void initView() {
         setAppTitle("添加商品");
-//        viewList = new ArrayList<>();
-//        viewHolderList = new ArrayList<>();
-//        View addView = LayoutInflater.from(AddGoodsActivity.this).inflate(R.layout.item_goods_guige, null);
-//        addView.setId(mark);
-//        parent.addView(addView, mark);
-//        getViewInstance(addView);
+        isEdit = getIntent().getBooleanExtra(Constant.IParam.editGoods,false);
+        if(isEdit){
+            setAppTitle("编辑商品");
+            addGoodsItem = (AddGoodsItem) getIntent().getSerializableExtra(Constant.IParam.addGoodsItem);
+            goodsId = getIntent().getStringExtra(Constant.IParam.goodsId);
+            if(addGoodsItem.getGoodsStatus().equals("1")){//=1为出售中
+                radio_button_sale.setChecked(true);
+            }else {
+                goodsStatus ="0";
+                radio_button_delisting.setChecked(true);
+            }
 
+            //是否推荐
+            if(addGoodsItem.getIs_homeRecommend().equals("1")){//=1为出售中
+                radio_button_main_suggest.setChecked(true);
+            }else {
+                is_homeRecommend ="0";
+                radio_button_main_unsuggest.setChecked(true);
+            }
+            et__homeRecommend_num.setText(addGoodsItem.getIs_homeRecommend_num()); //首页推荐顺序
+            goods_name.setText(addGoodsItem.getGoodsName());//商品名称
+            Glide.with(mContext)
+                    .load(addGoodsItem.getGoods_image())
+                    .priority(Priority.HIGH)
+                    .into(tv_home_pic);
 
+            String[] zhutu = addGoodsItem.getZhutu_image().split("\\|");
+            for(int i= 0 ;i<zhutu.length;i++){
+                Map<String,ImageData> map=new HashMap<>();
+                ImageData image = new ImageData();
+                image.setImgName(zhutu[i]);
+                map.put("ImageData",image);
+                homeImagedatas.add(map);
+            }
+
+            String[] xiangqing = addGoodsItem.getXiangqing_image().split("\\|");
+            for(int i= 0 ;i<xiangqing.length;i++){
+                Map<String,ImageData> map=new HashMap<>();
+                ImageData image = new ImageData();
+                image.setImgName(xiangqing[i]);
+                map.put("ImageData",image);
+                mainImagedatas.add(map);
+            }
+
+           List<Specification>  specification =   addGoodsItem.getSpecification();
+           for(int i =0;i<specification.size();i++){
+               addItem(specification.get(i));
+               SpecificationIndex= i+1;
+               guigeImage.add(i,specification.get(i).getImages());
+           }
+
+            et_property_title.setText(addGoodsItem.getProperty_title());
+            et_property_content.setText(addGoodsItem.getProperty_content());
+            goods_price.setText(addGoodsItem.getOriginal_price());
+            et_sale_percent.setText(addGoodsItem.getDiscount());
+            et_orderby_number.setText(addGoodsItem.getOrderBy());
+        }else{
+            setAppTitle("添加商品");
+        }
         tv_home_pic.setOnClickListener(v -> {
             flag = 1;
             Intent intent = new Intent(
@@ -215,8 +285,9 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
             startActivityForResult(intent, PHOTO_REQUEST_GALLERY);
         });
 
+
         //主图图片
-        homeImagedatas = new ArrayList<>();
+//        homeImagedatas = new ArrayList<>();
         gridViewHomeAddImgesAdpter = new GridViewAddImgesAdpter(homeImagedatas, this);
         gridView.setAdapter(gridViewHomeAddImgesAdpter);
         gridViewHomeAddImgesAdpter.setMaxImages(6);
@@ -224,12 +295,6 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 flag = 2;
-//                PhotoPickerIntent intent1 = new PhotoPickerIntent(AddGoodsActivity.this);
-//                intent1.setSelectModel(SelectModel.MULTI);
-//                intent1.setShowCarema(false); // 是否显示拍照
-//                intent1.setMaxTotal(5); // 最多选择照片数量，默认为9
-//                intent1.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态
-//                startActivityForResult(intent1, REQUEST_CAMERA_CODE);
                     Intent intent = new Intent(
                             Intent.ACTION_PICK,
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -238,7 +303,7 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
         });
 
         //详情图片
-        mainImagedatas = new ArrayList<>();
+//        mainImagedatas = new ArrayList<>();
         gridViewMainAddImgesAdpter = new GridViewAddImgesAdpter(mainImagedatas, this);
         gridview_detail_pic.setAdapter(gridViewMainAddImgesAdpter);
         gridViewMainAddImgesAdpter.setMaxImages(6);
@@ -246,64 +311,13 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 flag = 3;
-//                PhotoPickerIntent intent1 = new PhotoPickerIntent(AddGoodsActivity.this);
-//                intent1.setSelectModel(SelectModel.MULTI);
-//                intent1.setShowCarema(false); // 是否显示拍照
-//                intent1.setMaxTotal(5); // 最多选择照片数量，默认为9
-//                intent1.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态
-//                startActivityForResult(intent1, REQUEST_CAMERA_CODE);
                 Intent intent = new Intent(
                         Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, PHOTO_REQUEST_GALLERY);
             }
         });
-////        图片选择
-////        gridView = (GridView) findViewById(R.id.gridView);
-//        int cols = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().densityDpi;
-//        cols = cols < 3 ? 3 : cols;
-//
-//        gridView.setNumColumns(cols);
-//        int screenWidth = getResources().getDisplayMetrics().widthPixels;
-//        int columnSpace = getResources().getDimensionPixelOffset(R.dimen.space_size);
-//        columnWidth = (screenWidth - columnSpace * (cols-1)) / cols;
     }
-
-//    //上传图片
-//    public class ViewHolder1 {
-//        public final ImageView imageView;
-//        public final Button bt_del;
-//        public final View root;
-//
-//        public ViewHolder1(View root) {
-//            imageView = (ImageView) root.findViewById(R.id.imageView);
-//            bt_del = (Button) root.findViewById(R.id.bt_del);
-//            this.root = root;
-//        }
-//    }
-
-//    private void getViewInstance(View addView) {
-//        ViewHolder vh = new ViewHolder();
-//        vh.id = addView.getId();
-//        vh.iv_add_guige = (ImageView) addView.findViewById(R.id.iv_add_guige);
-//        vh.iv_add_guige.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                View view = (View) v.getParent();
-//                for (int i = 0; i < parent.getChildCount(); i++) {
-//                    ViewHolder viewHolder = viewHolderList.get(i);
-//                    Log.d("createclass", "view.getId()==" + v.getId() + "  viewHolder.id==" + viewHolder.id);
-//                    if (view.getId() == viewHolder.id) {
-////                        viewHolder.iv_add_guige.
-//                    }
-//                }
-//            }
-//        });
-//
-//        viewHolderList.add(vh);
-//        viewList.add(addView);
-//    }
-
 
     //规格
     public class ViewHolder {
@@ -319,6 +333,7 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private void radiogroupMainRecommend() {
+
         radio_button_main_recommend.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -369,6 +384,16 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
         adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 list1Spinner);
         sp1.setAdapter(adapter1);
+        if(isEdit){ //编辑
+
+        for (int i =0;i<addGoodsData.getGoodsTypes().size();i++){
+            if(addGoodsItem.getGoodsTypeParent().equals(addGoodsData.getGoodsTypes().get(i).getGoods_type_id()+"")){
+                sp1.setSelection(i,true);   //设置编辑状态进入时候的 初始值
+            }
+        }
+
+        }
+
         sp1.setOnItemSelectedListener(this);
     }
     //下拉列表
@@ -382,6 +407,13 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
         adapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 list3Spinner);
         sp3.setAdapter(adapter3);
+        if(isEdit) { //编辑
+            for (int i = 0; i < addGoodsData.getStoreType().size(); i++) {
+                if (addGoodsItem.getStoreType().equals(addGoodsData.getStoreType().get(i).getId() + "")) {
+                    sp3.setSelection(i, true);   //设置编辑状态进入时候的 初始值
+                }
+            }
+        }
         sp3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -409,6 +441,13 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
                 android.R.layout.simple_list_item_1,
                 list2Spinner);
         sp2.setAdapter(adapter2);
+        if(isEdit) { //编辑
+            for (int i = 0; i < goodsTypesBean.getSonType().size(); i++) {
+                if (addGoodsItem.getGoodsTypeSon().equals(goodsTypesBean.getSonType().get(i).getGoods_type_id() + "")) {
+                    sp2.setSelection(i, true);   //设置编辑状态进入时候的 初始值
+                }
+            }
+        }
         sp2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -528,19 +567,47 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
                 addGoodsItem.setOriginal_price(getSStr(goods_price));
                 addGoodsItem.setDiscount(getSStr(goods_price));
                 addGoodsItem.setOrderBy(getSStr(et_sale_percent));
-                addGoodsData();
+                if(isEdit){
+                    editGoodsData();
+                }else{
+                    addGoodsData();
+                }
+
                 break;
         }
     }
+
+    private void editGoodsData() {
+        showLoading();
+        Map<String,String> map=new HashMap<String,String>();
+        map.put("goodsId",goodsId);
+        map.put("sign", GetSign.getSign(map));
+        ApiRequest.editGoods(map, addGoodsItem,new MyCallBack<AddGoods>(mContext) {
+            @Override
+            public void onSuccess(AddGoods obj) {
+                if(obj.getStatus().equals("1")){
+                    showMsg("成功编辑商品");
+                    finish();
+                }
+
+            }
+        });
+    }
+
+
 
     private void addGoodsData() {
         showLoading();
         Map<String,String> map=new HashMap<String,String>();
         map.put("userId",getUserId());
         map.put("sign", GetSign.getSign(map));
-        ApiRequest.addGoods(map, addGoodsItem,new MyCallBack<LoginObj>(mContext) {
+        ApiRequest.addGoods(map, addGoodsItem,new MyCallBack<AddGoods>(mContext) {
             @Override
-            public void onSuccess(LoginObj obj) {
+            public void onSuccess(AddGoods obj) {
+                if(obj.getStatus().equals("1")){
+                    showMsg("成功添加商品");
+                    finish();
+                }
 
             }
         });
@@ -549,13 +616,81 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
     /**
      * 添加新view
      */
-    private void addItem()
-    {
+    private void addItem(Specification specification) {
         SpecificationIndex++;
         Log.d(TAG, "添加view");
         final ViewGroup newView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.item_goods_guige, parent, false);
+        imageView =  newView.findViewById(R.id.iv_add_guige);
+        MyEditText tv_price  =  newView.findViewById(R.id.tv_price);
+        tv_price.setText(specification.getPrice());
 
-//       newView.findViewById(android.R.id.iv_add_guige);
+        MyEditText tv_guige  =  newView.findViewById(R.id.tv_guige);
+        tv_guige.setText(specification.getSpecificationName());
+
+        MyEditText tv_inventory  =  newView.findViewById(R.id.tv_inventory);
+        tv_inventory.setText(specification.getStock());
+
+
+        Glide.with(mContext)
+                .load(specification.getImages())
+                .priority(Priority.HIGH)
+                .into(imageView);
+        newView.findViewById(R.id.iv_delete).setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < parent.getChildCount(); i++) {
+                    View childAt = parent.getChildAt(i);
+                    ImageView iv_delete = (ImageView) childAt.findViewById(R.id.iv_delete);
+                    if (iv_delete== v) {
+                        showMsg(i+"");
+                        if(guigeImage.size()>=i&&guigeImage.size()!=0){
+                            guigeImage.remove(i);
+                            specifications.remove(i);
+                        }
+                        parent.removeView(newView);
+                        break;
+                    }
+                }
+
+
+            }
+        });
+        imageView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                flag = 4;
+                for (int i = 0; i < parent.getChildCount(); i++) {
+                    View childAt = parent.getChildAt(i);
+                    ImageView iv_add_guige = (ImageView) childAt.findViewById(R.id.iv_add_guige);
+                    if (iv_add_guige== v) {
+                        SpecificationIndex = i;  //索引
+                        Intent intent = new Intent(
+                                Intent.ACTION_PICK,
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, PHOTO_REQUEST_GALLERY);
+                        break;
+                    }
+                }
+
+
+            }
+        });
+        int count = parent.getChildCount();
+
+        parent.addView(newView, count);
+
+    }
+
+    /**
+     * 添加新view
+     */
+    private void addItem() {
+        SpecificationIndex++;
+        Log.d(TAG, "添加view");
+        final ViewGroup newView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.item_goods_guige, parent, false);
          imageView =  newView.findViewById(R.id.iv_add_guige);
          newView.findViewById(R.id.iv_delete).setOnClickListener(new View.OnClickListener(){
 
@@ -575,7 +710,6 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
                     }
                 }
 
-//                parent.removeView(newView);
 
             }
         });
@@ -929,9 +1063,10 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
                 viewHolder = (ViewMainHolder) convertView.getTag();
             }
             if (datas != null && position < datas.size()) {
-                final File file = new File(datas.get(position).get("ImageData").getImagePath());
+
+                final File file = new File(datas.get(position).get("ImageData").getImgName());
                 Glide.with(context)
-                        .load(file)
+                        .load(datas.get(position).get("ImageData").getImgName())
                         .priority(Priority.HIGH)
                         .into(viewHolder.ivimage);
                 viewHolder.btdel.setVisibility(View.VISIBLE);

@@ -48,10 +48,13 @@ public class Constant {
         public static final String phone="phone";
         public static final String name="name";
         public static final String user_id="user_id";
+
         public static final String msgId="msgId";
         public static final String title="title";
         public static final String code="code";
         public static final String editCategory="editCategory";
+        public static final String editGoods="editGoods";//编辑商品
+        public static final String addGoodsItem="addGoodsItem";//商品信息
         public static final String Category="Category";
         public static final String accountId="accountId";
         public static final String account="account";

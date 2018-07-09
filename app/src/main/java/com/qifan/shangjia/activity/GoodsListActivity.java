@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.androidtools.PhoneUtils;
+import com.github.androidtools.SPUtils;
 import com.github.androidtools.inter.MyOnClickListener;
 import com.github.baseclass.adapter.BaseRecyclerAdapter;
 import com.github.baseclass.adapter.LoadMoreAdapter;
@@ -24,6 +25,7 @@ import com.qifan.shangjia.R;
 import com.qifan.shangjia.base.BaseActivity;
 import com.qifan.shangjia.base.MyCallBack;
 import com.qifan.shangjia.network.ApiRequest;
+import com.qifan.shangjia.network.response.AddGoodsItem;
 import com.qifan.shangjia.network.response.OrderDetailObj;
 
 
@@ -63,6 +65,29 @@ public class GoodsListActivity extends BaseActivity implements LoadMoreAdapter.O
                         .setText(R.id.tv_order_goods_origin_price, "¥" + item.getOriginal_price())
                         .setText(R.id.tv_order_goods_price, "¥" + item.getPrice())
                         .setText(R.id.tv_order_goods_num, "销量：" + item.getSales_volume());
+
+                MyTextView tv_goods_editor=  (MyTextView) viewHolder.getView(R.id.tv_goods_editor);
+                tv_goods_editor.setOnClickListener(new MyOnClickListener() {//编辑
+                    @Override
+                    protected void onNoDoubleClick(View view) {
+                       String goodsId = item.getGoods_id()+"" ;
+                        showLoading();
+                        Map<String,String>map=new HashMap<String,String>();
+                        map.put("goodsId",item.getGoods_id()+"");
+                        map.put("sign",GetSign.getSign(map));
+                        ApiRequest.getGoodsDetail(map, new MyCallBack<AddGoodsItem>(mContext) {
+                            @Override
+                            public void onSuccess(AddGoodsItem obj) {
+                                Intent intent=new Intent();
+                                intent.putExtra(Constant.IParam.editGoods,true);
+                                intent.putExtra(Constant.IParam.addGoodsItem,obj);
+                                intent.putExtra(Constant.IParam.goodsId,goodsId);
+                                STActivityForResult(intent,AddGoodsActivity.class,101);
+                            }
+                        });
+
+                    }
+                });
 
             }
         };
@@ -121,6 +146,7 @@ public class GoodsListActivity extends BaseActivity implements LoadMoreAdapter.O
         if(resultCode==RESULT_OK){
             switch (requestCode){
                 case 100:
+                case 101:
                     initData();
                     break;
             }

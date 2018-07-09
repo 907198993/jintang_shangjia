@@ -160,7 +160,6 @@ public class MyFragment extends BaseFragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 if(position==0){
                      STActivity(AddGoodsActivity.class);
                 }else if(position==1){

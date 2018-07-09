@@ -2,6 +2,7 @@ package com.qifan.shangjia.network;
 
 import com.qifan.shangjia.base.BaseObj;
 import com.qifan.shangjia.base.ResponseObj;
+import com.qifan.shangjia.network.response.AddGoodsItem;
 import com.qifan.shangjia.network.response.AddGoodsObj;
 import com.qifan.shangjia.network.response.BillObj;
 import com.qifan.shangjia.network.response.CategoryObj;
@@ -46,6 +47,10 @@ public interface IRequest {
     //修改密码
     @GET("api/Login/RetrievePwd")
     Call<ResponseObj<Integer>> userRetrievePwd(@QueryMap Map<String,String> map);
+
+    //新增商品
+    @POST("api/App/AddGoods")
+    Call<ResponseObj<Integer>> addGoods(@QueryMap Map<String,String> map, @Body AddGoodsItem item);
 
     //获取商品列表
     @POST("api/App/GetGoodsList")

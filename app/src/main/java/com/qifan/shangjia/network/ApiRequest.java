@@ -5,6 +5,7 @@ import com.github.retrofitutil.NoNetworkException;
 import com.qifan.shangjia.Config;
 import com.qifan.shangjia.base.BaseApiRequest;
 import com.qifan.shangjia.base.MyCallBack;
+import com.qifan.shangjia.network.response.AddGoodsItem;
 import com.qifan.shangjia.network.response.UploadImgItem;
 
 import java.util.Map;
@@ -37,6 +38,14 @@ public class ApiRequest extends BaseApiRequest {
             return;
         }
         getGeneralClient(IRequest.class).userLogin(map).enqueue(callBack);
+    }
+
+    public static void addGoods(Map map, AddGoodsItem item, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).addGoods(map,item).enqueue(callBack);
     }
 
     public static void userRetrievePwd(Map map, MyCallBack callBack) {

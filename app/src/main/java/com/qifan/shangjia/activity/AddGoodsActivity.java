@@ -11,6 +11,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.AppCompatSpinner;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,7 @@ import com.qifan.shangjia.base.BaseActivity;
 import com.qifan.shangjia.base.BaseObj;
 import com.qifan.shangjia.base.MyCallBack;
 import com.qifan.shangjia.network.ApiRequest;
+import com.qifan.shangjia.network.response.AddGoodsItem;
 import com.qifan.shangjia.network.response.AddGoodsObj;
 import com.qifan.shangjia.network.response.ImageData;
 import com.qifan.shangjia.network.response.LoginObj;
@@ -137,11 +139,11 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
     ///////////出售状态
     @BindView(R.id.radiogroup_status)
     RadioGroup radiogroup_status;
-    private String goodsStatus;
+    private String goodsStatus="1";
     //是否店铺首页推荐
     @BindView(R.id.radio_button_main_recommend)
     RadioGroup radio_button_main_recommend;
-    private String is_homeRecommend;
+    private String is_homeRecommend="1";
 
     //首页推荐顺序
     @BindView(R.id.et__homeRecommend_num)
@@ -154,6 +156,7 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
     @BindView(R.id.tv_home_pic)
     MyImageView tv_home_pic;
     private  String goods_image; //封面图
+
 
    //详情图片
     @BindView(R.id.gridview_detail_pic)
@@ -190,6 +193,8 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
         return R.layout.add_goods;
     }
     ImageView imageView ;
+
+    private AddGoodsItem addGoodsItem = new AddGoodsItem();
 
     @Override
     protected void initView() {
@@ -340,7 +345,7 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
                 switch (checkedId) {
                     case R.id.radio_button_sale:
                         goodsStatus = "1";
-                      showMsg("1");
+                        showMsg("1");
                         break;
                     case R.id.radio_button_delisting:
                         goodsStatus = "0";
@@ -467,11 +472,6 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
     protected void onViewClick(View v) {
         switch (v.getId()) {
             case R.id.btn_add_guige:
-
-//                View addView = LayoutInflater.from(AddGoodsActivity.this).inflate(R.layout.item_goods_guige, null);
-//                addView.setId(++mark);
-//                parent.addView(addView);
-//                getViewInstance(addView);
                 addItem();
                 break;
             case R.id.tv_add_goods_commit:
@@ -479,9 +479,71 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
                 mainImagedatas.size();
                 showMsg(goodsTypeParent+"父类"+goodsTypeSon+"storeType"+storeType);
                 specifications = printData();
-                showMsg(specifications.size()+"");
+
+                if(TextUtils.isEmpty(getSStr(et__homeRecommend_num))){
+                    showToastS("请输入首页推荐顺序");
+                    return;
+                }else if(TextUtils.isEmpty(getSStr(goods_name))){
+                    showToastS("请输入商品名称");
+                    return;
+                }else if(TextUtils.isEmpty(getSStr(et_property_title))){
+                    showToastS("请输入标题");
+                    return;
+                }else if(TextUtils.isEmpty(getSStr(et_property_content))){
+                    showToastS("请输入内容");
+                    return;
+                }else if(TextUtils.isEmpty(getSStr(goods_price))){
+                    showToastS("请输入商品原价");
+                    return;
+                }else if(TextUtils.isEmpty(getSStr(goods_price))){
+                    showToastS("请输入折扣比例");
+                    return;
+                }else if(TextUtils.isEmpty(getSStr(et_sale_percent))){
+                    showToastS("请输入排序数字");
+                    return;
+                }
+                addGoodsItem.setGoodsTypeParent(goodsTypeParent);//
+                addGoodsItem.setGoodsTypeSon(goodsTypeSon);
+                addGoodsItem.setStoreType(storeType);
+                addGoodsItem.setIs_homeRecommend(is_homeRecommend);
+                addGoodsItem.setGoodsStatus(goodsStatus);
+                addGoodsItem.setIs_homeRecommend_num(getSStr(et__homeRecommend_num));
+                addGoodsItem.setGoodsName(getSStr(goods_name));//商品名称
+                addGoodsItem.setGoods_image(goods_image);//封面图
+
+                String paraZhutu="";
+                for(int i=0;i< homeImagedatas.size();i++){
+                    paraZhutu += homeImagedatas.get(i).get("ImageData").getImgName()+"|";
+                }
+                addGoodsItem.setZhutu_image(paraZhutu);//主图
+
+                String paraXiangqing="";
+                for(int i=0;i< mainImagedatas.size();i++){
+                    paraXiangqing += mainImagedatas.get(i).get("ImageData").getImgName()+"|";
+                }
+                addGoodsItem.setXiangqing_image(paraXiangqing);//详情图
+                addGoodsItem.setSpecification(specifications);
+                addGoodsItem.setProperty_title(getSStr(et_property_title));
+                addGoodsItem.setProperty_content(getSStr(et_property_content));
+                addGoodsItem.setOriginal_price(getSStr(goods_price));
+                addGoodsItem.setDiscount(getSStr(goods_price));
+                addGoodsItem.setOrderBy(getSStr(et_sale_percent));
+                addGoodsData();
                 break;
         }
+    }
+
+    private void addGoodsData() {
+        showLoading();
+        Map<String,String> map=new HashMap<String,String>();
+        map.put("userId",getUserId());
+        map.put("sign", GetSign.getSign(map));
+        ApiRequest.addGoods(map, addGoodsItem,new MyCallBack<LoginObj>(mContext) {
+            @Override
+            public void onSuccess(LoginObj obj) {
+
+            }
+        });
     }
 
     /**
@@ -771,6 +833,7 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
                     .load(file)
                     .priority(Priority.HIGH)
                     .into(tv_home_pic);
+
         }else if(flag == 2){
             Map<String,ImageData> map=new HashMap<>();
             map.put("ImageData",imageData);
@@ -782,7 +845,7 @@ public class AddGoodsActivity extends BaseActivity implements AdapterView.OnItem
             mainImagedatas.add(map);
             gridViewMainAddImgesAdpter.notifyDataSetChanged();
         }else{
-            guigeImage.add(SpecificationIndex,imageData.getImagePath());
+            guigeImage.add(SpecificationIndex,imageData.getImgName());
             Glide.with(mContext).load(imageData.getImagePath()).error(R.color.c_press).into(imageView);
         }
 
